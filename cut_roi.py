@@ -14,10 +14,10 @@ def getNodeValue(node, index = 0):
     return node.childNodes[index].nodeValue if node else ''
 
 
-data_dir = '/Users/ngy/data/temp/download/images/627/shuffled'
+data_dir = '/Users/ngy/data/temp/download/images/643/shuffled'
 img_dir = data_dir + '/img'
 xml_dir = data_dir + '/xml'
-output_dir = data_dir + '/img_box'
+output_dir = data_dir + '/svm/pos'
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
@@ -42,7 +42,6 @@ for img_file in ImageNames:
             ymax = int(float(getNodeValue(getXmlNode(object, "ymax")[0])))
             label = getNodeValue(getXmlNode(object, "name")[0])
             print(xmin, ymin, xmax, ymax, label)
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)
-            cv2.putText(img, label, (xmin, ymin - 2), 0, 1, (0, 255, 0), 2)
+            img_crop = img[ymin:ymax, xmin:xmax]
 
-        cv2.imwrite(output_dir + '/' + img_file, img)
+        cv2.imwrite(output_dir + '/' + img_file, img_crop)
