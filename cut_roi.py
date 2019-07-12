@@ -14,10 +14,10 @@ def getNodeValue(node, index = 0):
     return node.childNodes[index].nodeValue if node else ''
 
 
-data_dir = '/Users/ngy/data/temp/download/images/643/shuffled'
+data_dir = '/Users/ngy/data/jj'
 img_dir = data_dir + '/img'
 xml_dir = data_dir + '/xml'
-output_dir = data_dir + '/svm/pos'
+output_dir = data_dir + '/pos'
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
