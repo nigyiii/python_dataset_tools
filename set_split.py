@@ -5,7 +5,7 @@ import random
 import time  
 import shutil  
 
-base_path = '/Users/ngy/data/jj_person'  
+base_path = '/Users/ngy/data/jj_person'
 xmlfilepath = base_path + '/xml' 
 saveBasePath = base_path + '/Annotations'  
   
