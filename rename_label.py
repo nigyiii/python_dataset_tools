@@ -7,7 +7,7 @@ import xml.dom.minidom
 import shutil
 
 #获得文件夹中所有文件
-base_path = '/Users/ngy/data/temp/download/images/632'
+base_path = '/Users/ngy/data/temp/download/images/20'
 xml_path = base_path + '/labels'
 img_path = base_path + '/images'
 FileNames = os.listdir(xml_path)
@@ -26,8 +26,8 @@ def getXmlNode(node, name):
     return node.getElementsByTagName(name) if node else []
 
 
-old_name = '632'
-new_name = 'p0632'
+old_name = '20'
+new_name = 'souhu_huyou'
 
 
 for file_name in FileNames:
