@@ -15,11 +15,15 @@ def getNodeValue(node, index = 0):
     return node.childNodes[index].nodeValue if node else ''
 
 
-data_dir = '/Users/ngy/Downloads/VOCtest/voc2007'
+data_dir = '/Users/ngy/data/logo_mangguo/pad_aug/VOCdevkit/VOC2007'
 xml_dir = data_dir + '/Annotations'
 img_dir = data_dir + '/JPEGImages'
-save_img_dir = '/Users/ngy/data/person2/img'
-save_xml_dir = '/Users/ngy/data/person2/xml'
+save_img_dir = '/Users/ngy/data/logo_mangguo/souhu_huyou/img'
+save_xml_dir = '/Users/ngy/data/logo_mangguo/souhu_huyou/xml'
+
+for _path in save_xml_dir, save_img_dir:
+    if not os.path.exists(_path):
+        os.makedirs(_path)
 
 ImageNames = os.listdir(img_dir)
 ImageNames.sort()
@@ -38,7 +42,7 @@ for img_file in ImageNames:
             xmax = int(float(getNodeValue(getXmlNode(object, "xmax")[0])))
             ymax = int(float(getNodeValue(getXmlNode(object, "ymax")[0])))
             label = getNodeValue(getXmlNode(object, "name")[0])
-            if label == 'person':
+            if label == 'souhu_huyou':
                 shutil.copy(img_dir + '/' + img_file, save_img_dir + '/' + img_file)
                 shutil.copy(xml_dir + '/' + xml_file, save_xml_dir + '/' + xml_file)
                 print('find label in ' + img_file)

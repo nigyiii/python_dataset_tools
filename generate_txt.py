@@ -21,8 +21,8 @@ if not os.path.exists(root_path):
 if not os.path.exists(txtsavepath):
     os.makedirs(txtsavepath)
 
-trainval_percent = 1
-train_percent = 1
+trainval_percent = 0.95
+train_percent = 1.0
 total_xml = os.listdir(xmlfilepath)
 num = len(total_xml)
 list = range(num)
