@@ -6,6 +6,7 @@ import xml.dom.minidom
 from prettytable import PrettyTable
 import re
 import shutil
+import traceback
 
 def getXmlNode(node, name):
     return node.getElementsByTagName(name) if node else []
@@ -17,15 +18,17 @@ def count_label(anno_path):
     if not os.path.exists(anno_path):
         print("cannot find such directory: " + anno_path)
         exit()
-
+    clen = len(os.listdir(anno_path))
     result = os.walk(anno_path)
     name_set = set()
     name_num_dict = {}
-
+    #print(result)
     for a in result:
-        try:
-            for file_x in a[2]:
-                print("start scanning file: " + file_x)
+        #print(a)
+        for file_x in a[2]:
+            #print(file_x)
+            try:
+                #print("start scanning file: " + file_x)
                 file_path = os.path.join(anno_path, file_x)
                 dom = xml.dom.minidom.parse(file_path)
                 root = dom.documentElement
@@ -43,8 +46,8 @@ def count_label(anno_path):
                         name_num_dict[name] += 1
                     else:
                         name_num_dict[name] = 1
-        except Exception as e:
-            print(e)        
+            except Exception as e:
+                print(e)        
 
     class_num = 'class number: '+str(len(name_set))
     #print("scanning finished" + '\n' + class_num)
@@ -55,12 +58,13 @@ def count_label(anno_path):
     for tup in name_num_list:
     	table.add_row([tup[0], tup[1]])
 
-    return table
+    return table, clen
 
 
 def find_label(xml_dir, target):
 
     XmlNames = os.listdir(xml_dir)
+    
     XmlNames.sort()
     foundlist = []
 
@@ -77,6 +81,7 @@ def find_label(xml_dir, target):
                     break
         except Exception as e:
             print(e)
+            print(traceback.format_exc())
 
     return foundlist
 
@@ -92,7 +97,7 @@ def remove_label(srcdir, dstdir, target):
     for dir in tmp_dir, del_dir:
         if not os.path.exists(dir):
             os.makedirs(dir)
-
+ 
     for xml_file in Names:
         try:
             #print('processing ' + xml_file)
@@ -104,18 +109,19 @@ def remove_label(srcdir, dstdir, target):
                 if label == target:
                     object.parentNode.removeChild(object)
 
-            with open(os.path.join(tmp_dir, xml_file), 'w') as fh:
+            with open(os.path.join(del_dir, xml_file), 'w') as fh:
                 dom.writexml(fh)
             
-            w = open(os.path.join(del_dir, xml_file),'w')
-            empty=re.compile('^\s*$')
-            for line in open(os.path.join(tmp_dir, xml_file), 'r').readlines():
-                if empty.match(line):
-                    continue
-                else: 
-                    w.write(line)
+            #w = open(os.path.join(del_dir, xml_file),'w')
+            #empty=re.compile('^\s*$')
+            #for line in open(os.path.join(tmp_dir, xml_file), 'r').readlines():
+            #    if empty.match(line):
+            #        continue
+            #    else: 
+            #        w.write(line)
         except Exception as e:
             print(e)
+            print(traceback.format_exc())
 
     shutil.rmtree(tmp_dir)
 
@@ -130,7 +136,7 @@ def rename_label(xml_path, dst_path, origin_name, new_name):
     for file_name in FileNames:
         try:
             #print(file_name)
-            old_name = file_name.split('_')[0]         
+            old_name = file_name.split('_')[0] 
             dom = xml.dom.minidom.parse(os.path.join(xml_path,file_name))
             root = dom.documentElement
             node = getXmlNode(root, "object") 
@@ -143,6 +149,7 @@ def rename_label(xml_path, dst_path, origin_name, new_name):
                 dom.writexml(fh)
         except Exception as e:
             print(e)
+            print(traceback.format_exc())
 
 if __name__ == '__main__':
-    rename_label('/Users/ngy/data/test/roi/del', '/Users/ngy/data/test/roi/new', '1', 'xx')
+    rename_label('/Users/ngy/data/flag/p', '/Users/ngy/data/flag/p', '0', 'xx')

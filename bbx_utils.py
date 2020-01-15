@@ -23,8 +23,8 @@ def crop_bbx(img_dir, xml_dir, output_dir):
     ImageNames = os.listdir(img_dir)
 
     for img_file in ImageNames:
-        #print(img_file)
         try:
+        #print(img_file)
             img = cv2.imread(img_dir + '/' + img_file)
             #h = img.shape[0]
 
@@ -57,7 +57,6 @@ def draw_bbx(img_dir, xml_dir, output_dir):
 
     for img_file in ImageNames:
         try:
-            #print(img_file)
             img = cv2.imread(img_dir + '/' + img_file)
             #h = img.shape[0]
 

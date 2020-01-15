@@ -23,7 +23,7 @@ if not os.path.exists(txtsavepath):
 
 def main():
     trainval_percent = 0.95
-    train_percent = 1.0
+    train_percent = 0.95
     total_xml = os.listdir(xmlfilepath)
     num = len(total_xml)
     list = range(num)
